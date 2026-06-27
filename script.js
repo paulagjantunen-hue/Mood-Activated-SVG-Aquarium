@@ -1,20 +1,13 @@
 const svg = document.getElementById("aquarium");
-const audio = document.getElementById("player");
+const audio = document.getElementById("audio");
 
 const W = window.innerWidth;
 const H = window.innerHeight;
 
-svg.setAttribute("width", W)
+svg.setAttribute("width", W);
 svg.setAttribute("height", H);
 
 let fishes = [];
-
-setInterval(() => {
-    createBubble(
-        Math.random()*width,
-        height
-    );
-},300);
 
 fetch("tracks.json")
     .then(res => res.json())
@@ -77,7 +70,7 @@ function animate() {
 
         const angle = Math.atan2(f.vy, f.vx) * 180 / Math.PI;
 
-        f.setAttribute(
+        f.el.setAttribute(
             "transform",
             `translate(${f.x},${f.y}) rotate(${angle})`
         );
