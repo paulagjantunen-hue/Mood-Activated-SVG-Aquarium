@@ -14,3 +14,36 @@ body {
     text-anchor: middle;
     pointer-events: none;
 }
+
+.tail{
+    transform-origin:-28px center;
+    animation:tail 0.4s infinite alternate;
+}
+
+@keyframes tail{
+    from{
+        transform:rotate(-18deg);
+    }
+    to{
+        transform:rotate(18deg);
+    }
+}
+
+.bubble{
+    opacity:.7;
+    animation:rise 8s linear forwards;
+}
+
+@keyframes rise{
+
+0%{
+transform:translateY(0);
+opacity:.7;
+}
+
+100%{
+transform:translateY(-100vh);
+opacity:0;
+}
+
+}

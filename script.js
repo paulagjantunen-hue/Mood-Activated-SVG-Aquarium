@@ -9,6 +9,13 @@ svg.setAttribute("height", H);
 
 let fishes = [];
 
+setInterval(() => {
+    createBubble(
+        Math.random()*width,
+        height
+    );
+},300);
+
 fetch("tracks.json")
     .then(res => res.json())
     .then(data => {
@@ -31,6 +38,7 @@ function createFish(song) {
 
     g.appendChild(fish);
     g.appendChild(label);
+    g.setAttribute("class", "fish");
     svg.appendChild(g);
 
     const state = {
@@ -45,7 +53,7 @@ function createFish(song) {
     g.addEventListener("click", () => {
         audio.src = song.preview;
         audio.play();
-        setTimeout(() => audio.onpause(), 10000);
+        setTimeout(() => audio.pause(), 10000);
     });
 
     fishes.push(state);
@@ -67,8 +75,31 @@ function animate() {
         if (f.y < 0) f.y = H;
         if (f.y > H) f.y = 0;
 
-        f.el.setAttribute("transform", `translate(${f.x},${f.y})`);
+        const angle = Math.atan2(f.vy, f.vx) * 180 / Math.PI;
+
+        f.setAttribute(
+            "transform",
+            `translate(${f.x},${f.y}) rotate(${angle})`
+        );
     });
 
     requestAnimationFrame(animate);
+}
+
+function moodColor(valence){
+
+if(valence>.8)
+return "#ffe066";
+
+if(valence>.6)
+return "#72efdd";
+
+if(valence>.4)
+return "#4ea8de";
+
+if(valence>.2)
+return "#5e60ce";
+
+return "#3a0ca3";
+
 }
