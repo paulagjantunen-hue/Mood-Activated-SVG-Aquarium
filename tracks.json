@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Blinding Lights",
+        "valence": 0.8,
+        "energy": 0.9,
+        "tempo": 171,
+        "color": "#ffd166",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    },
+    {
+        "title": "Lo-Fi Chill",
+        "valence": 0.5,
+        "energy": 0.3,
+        "tempo": 80,
+        "color": "#4cc9f0",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+    },
+    {
+        "title": "Sad Piano",
+        "valence": 0.2,
+        "energy": 0.2,
+        "tempo": 60,
+        "color": "#4361ee",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+    }
+]

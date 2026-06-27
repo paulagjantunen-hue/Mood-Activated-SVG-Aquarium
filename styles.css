@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(#061a2b, #0b2a3d);
+}
+
+.fish {
+    cursor: pointer;
+}
+
+.label {
+    font-size: 10px;
+    fill: white;
+    text-anchor: middle;
+    pointer-events: none;
+}
