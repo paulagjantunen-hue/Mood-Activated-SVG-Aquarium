@@ -42,6 +42,9 @@ function createFishPopulation(tracks) {
 /* ANIMATION LOOP */
 
 function animate() {
+
+    updateOceanMood();
+
     boids.update();
 
     fishes.forEach(fish => {
@@ -96,10 +99,42 @@ function setupSearch() {
 /* INIT */
 
 function init() {
-    loadTracks();
-    animate();
+    loadTracks().then(() => {
+        animate();
+    });
+
     startBubbles();
     setupSearch();
 }
 
 init();
+
+const startBtn = document.getElementById("startBtn");
+if (startBtn) {
+    startBtn.addEventListener("click", () => {
+        const startScreen = document.getElementById("startScreen");
+        if (startScreen) {
+            startScreen.style.display = "none";
+        }
+    });
+}
+
+function updateOceanMood() {
+    if (fishes.length === 0) return;
+
+    let avg = 0;
+
+    fishes.forEach(f => {
+        avg += f.song.valence;
+    });
+
+    avg /= fishes.length;
+
+    const hue = 200 + avg * 80;
+
+    document.body.style.background = `
+        radial-gradient(circle at center,
+        hsl(${hue}, 60%, 18%),
+        #020b14)
+    `;
+}

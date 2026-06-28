@@ -98,3 +98,10 @@ class Fish {
         this.ui.show(this.song);
     }
 }
+
+const scale = 1 + Math.sin(Date.now() * 0.002 + this.x) * 0.03;
+
+this.el.setAttribute(
+    "transform",
+    `translate(${this.x},${this.y}) rotate(${angle}) scale(${scale})`
+);
