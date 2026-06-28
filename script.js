@@ -9,15 +9,23 @@ let fishes = [];
 /* LOAD DATA */
 
 async function loadTracks() {
-    const res = await fetch("./data/tracks.json");
+  try {
+        const res = await fetch("data/tracks.json");
+      throw new Error("HTTP " + res.status);
+    }
+
     const tracks = await res.json();
 
     createFishPopulation(tracks);
 
-    // hide loading screen
-    setTimeout(() => {
-        document.getElementById("loading").classList.add("hidden");
-    }, 800);
+    document.getElementById("loading").classList.add("hidden");
+
+  } catch (err) {
+    console.error(err);
+
+    document.getElementById("loading").innerHTML =
+      "<h2>Ocean failed to load</h2><p>Check that tracks.json exists in /data</p>";
+  }
 }
 
 /* CREATE FISH */
