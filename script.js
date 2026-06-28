@@ -10,7 +10,9 @@ let fishes = [];
 
 async function loadTracks() {
   try {
-        const res = await fetch("data/tracks.json");
+    const res = await fetch("data/tracks.json");
+
+    if (!res.ok) {
       throw new Error("HTTP " + res.status);
     }
 
