@@ -1,0 +1,74 @@
+[
+    {
+        "title": "Midnight Drift",
+        "genre": "Ambient",
+        "valence": 0.2,
+        "energy": 0.3,
+        "tempo": 72,
+        "color": "#3a0ca3",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    },
+    {
+        "title": "Sunrise Pulse",
+        "genre": "Pop"
+        "valence": 0.9,
+        "energy": 0.8,
+        "tempo": 128,
+        "color": "#ffe066",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+    },
+    {
+        "title": "Deep Ocean Thoughts",
+        "genre": "Lo-Fi",
+        "valence": 0.4,
+        "energy": 0.4,
+        "tempo": 85,
+        "color": "#4ea8de",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+    },
+    {
+        "title": "Neon Rush",
+        "genre": "Electronic",
+        "valence": 0.7,
+        "energy": 0.95,
+        "tempo": 150,
+        "color": "#f72585",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+    },
+    {
+        "title": "Soft Rain Memories",
+        "genre": "Indie",
+        "valence": 0.3,
+        "energy": 0.2,
+        "tempo": 60,
+        "color": "#4361ee",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+    },
+    {
+        "title": "Golden Skies",
+        "genre": "Pop",
+        "valence": 0.85,
+        "energy": 0.7,
+        "tempo": 120,
+        "color": "#ffd166",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
+    },
+    {
+        "title": "Gravity Waves",
+        "genre": "Electronic",
+        "Valence": 0.5,
+        "energy": 0.6,
+        "tempo": 110,
+        "color": "#7209b7",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3"
+    },
+    {
+        "title": "Silent Forest",
+        "genre": "Ambient",
+        "valence": 0.25,
+        "energy": 0.15,
+        "tempo": 55,
+        "color": "#1b4965",
+        "preview": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+    }
+]

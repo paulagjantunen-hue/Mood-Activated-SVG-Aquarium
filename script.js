@@ -1,36 +1,95 @@
 const svg = document.getElementById("aquarium");
 const audio = document.getElementById("audio");
+
 const ui = new UI();
 const boids = new BoidsSystem(window.innerWidth, window.innerHeight);
-const fishes = [];
 
-function resizeAquarium() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    svg.setAttribute("width", width);
-    svg.setAttribute("height", height);
-    boids.width = width;
-    boids.height = height;
+let fishes = [];
+
+/* LOAD DATA */
+
+async function loadTracks() {
+    const res = await fetch("./data/tracks.json");
+    const tracks = await res.json();
+
+    createFishPopulation(tracks);
+
+    // hide loading screen
+    setTimeout(() => {
+        document.getElementById("loading").classList.add("hidden");
+    }, 800);
 }
 
-resizeAquarium();
-window.addEventListener("resize", resizeAquarium);
+/* CREATE FISH */
 
-fetch("tracks.json")
-    .then(res => res.json())
-    .then(data => {
-        data.forEach(song => {
-            const fish = new Fish(song, svg, boids, audio, ui);
-            fishes.push(fish);
-        });
-        animate();
-    })
-    .catch(error => {
-        console.error("Failed to load tracks:", error);
+function createFishPopulation(tracks) {
+    tracks.forEach(track => {
+        const fish = new Fish(track, svg, boids, audio, ui);
+        fishes.push(fish);
     });
+}
+
+/* ANIMATION LOOP */
 
 function animate() {
     boids.update();
-    fishes.forEach(fish => fish.update());
+
+    fishes.forEach(fish => {
+        fish.update();
+    });
+
     requestAnimationFrame(animate);
 }
+
+/* BUBBLES SYSTEM */
+
+function createBubble() {
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+
+    bubble.style.left = Math.random() * window.innerWidth + "px";
+    bubble.style.bottom = "0px";
+
+    const size = 4 + Math.random() * 6;
+    bubble.style.width = size + "px";
+    bubble.style.height = size + "px";
+
+    bubble.style.animationDuration = 4 + Math.random() * 6 + "s";
+
+    document.body.appendChild(bubble);
+
+    setTimeout(() => {
+        bubble.remove();
+    }, 10000);
+}
+
+function startBubbles() {
+    setInterval(createBubble, 500);
+}
+
+/* SEARCH FILTER */
+
+function setupSearch() {
+    const input = document.getElementById("search");
+
+    input.addEventListener("input", (e) => {
+        const value = e.target.value.toLowerCase();
+
+        fishes.forEach(fish => {
+            const match = fish.song.title.toLowerCase().includes(value);
+
+            fish.el.style.opacity = match ? "1" : "0.1";
+        });
+    });
+}
+
+/* INIT */
+
+function init() {
+    loadTracks();
+    animate();
+    startBubbles();
+    setupSearch();
+}
+
+init();
