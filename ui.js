@@ -1,38 +1,60 @@
 class UI {
     constructor() {
         this.panel = document.getElementById("infoPanel");
-        this.closeBtn = document.getElementById("close");
-        this.titleEl = document.getElementById("songTitle");
-        this.genreEl = document.getElementById("songGenre");
+
+        this.title = document.getElementById("songTitle");
+        this.genre = document.getElementById("songGenre");
+
         this.moodBar = document.getElementById("moodBar");
         this.energyBar = document.getElementById("energyBar");
         this.tempoBar = document.getElementById("tempoBar");
-        this.previewBtn = document.getElementById("playPreview");
-        this.audio = document.getElementById("audio");
+
+        this.playBtn = document.getElementById("playPreview");
+        this.closeBtn = document.getElementById("close");
+
         this.currentSong = null;
 
-        this.closeBtn.addEventListener("click", () => this.hide());
-        this.previewBtn.addEventListener("click", () => this.playPreview());
+        this.bindEvents();
+    }
+
+    bindEvents() {
+        this.closeBtn.addEventListener("click", () => {
+            this.hide();
+        });
+
+        this.playBtn.addEventListener("click", () => {
+            if (!this.currentSong?.preview) return;
+
+            const audio = document.getElementById("audio");
+            audio.src = this.currentSong.preview;
+            audio.play();
+
+            setTimeout(() => {
+                audio.pause();
+            }, 10000);
+        });
     }
 
     show(song) {
         this.currentSong = song;
-        this.titleEl.textContent = song.title;
-        this.genreEl.textContent = song.genre || "Unknown genre";
-        this.moodBar.style.width = `${Math.min(Math.max(song.valence || 0, 0), 1) * 100}%`;
-        this.energyBar.style.width = `${Math.min(Math.max(song.energy || 0, 0), 1) * 100}%`;
-        this.tempoBar.style.width = `${Math.min((song.tempo || 0) / 200, 1) * 100}%`;
+
+        this.title.textContent = song.title;
+        this.genre.textContent = song.genre || "Unknown genre";
+
+        // normalize values (0-1 → %)
+        const mood = song.valence * 100;
+        const energy = song.energy * 100;
+        const tempo = Math.min(song.tempo / 200, 1) * 100;
+
+        this.moodBar.style.width = mood + "%";
+        this.energyBar.style.width = energy + "%";
+        this.tempoBar.style.width = tempo + "%";
+
         this.panel.classList.remove("hidden");
     }
 
     hide() {
         this.panel.classList.add("hidden");
-    }
-
-    playPreview() {
-        if (!this.currentSong || !this.currentSong.preview) return;
-        this.audio.src = this.currentSong.preview;
-        this.audio.play();
-        setTimeout(() => this.audio.pause(), 10000);
+        this.currentSong = null;
     }
 }
