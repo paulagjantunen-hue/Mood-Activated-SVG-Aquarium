@@ -1,59 +1,37 @@
-class BoidsSystem {
+export class BoidsSystem {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.fishes = [];
+
+        this.neighborDist = 120;
     }
 
-    addFish(fish) {
-        this.fishes.push(fish);
+    setBounds(width, height) {
+        this.width = width;
+        this.height = height;
     }
 
-    update() {
-        for (let fish of this.fishes) {
-            const force = this.computeBoidForces(fish);
-
-            fish.vx += force.x;
-            fish.vy += force.y;
-
-            // speed limit
-            const speedLimit = fish.song.energy * 2.5 + 0.5;
-
-            const speed = Math.sqrt(fish.vx * fish.vx + fish.vy * fish.vy);
-
-            if (speed > speedLimit) {
-                fish.vx = (fish.vx / speed) * speedLimit;
-                fish.vy = (fish.vy / speed) * speedLimit;
-            }
-
-            fish.x += fish.vx;
-            fish.y += fish.vy;
-
-            // wrap edges (ocean loop)
-            if (fish.x < 0) fish.x = this.width;
-            if (fish.x > this.width) fish.x = 0;
-            if (fish.y < 0) fish.y = this.height;
-            if (fish.y > this.height) fish.y = 0;
-        }
+    add(fish) {
     }
 
-    computeBoidForces(fish) {
-        const neighborDist = 120;
+    /* MAIN FORCE CALC */
 
+    getForce(fish, fishes = []) {
         let align = { x: 0, y: 0 };
         let cohesion = { x: 0, y: 0 };
         let separation = { x: 0, y: 0 };
 
         let count = 0;
 
-        for (let other of this.fishes) {
+        for (const other of fishes) {
             if (other === fish) continue;
 
             const dx = other.x - fish.x;
             const dy = other.y - fish.y;
+
             const dist = Math.sqrt(dx * dx + dy * dy);
 
-            if (dist < neighborDist) {
+            if (dist < this.neighborDist && dist > 0) {
                 // ALIGNMENT (match velocity)
                 align.x += other.vx;
                 align.y += other.vy;
@@ -63,8 +41,8 @@ class BoidsSystem {
                 cohesion.y += other.y;
 
                 // SEPARATION (avoid crowding)
-                separation.x -= dx / (dist + 0.01);
-                separation.y -= dy / (dist + 0.01);
+                separation.x -= dx / dist;
+                separation.y -= dy / dist;
 
                 count++;
             }
@@ -81,8 +59,7 @@ class BoidsSystem {
             cohesion.y = (cohesion.y - fish.y) * 0.002;
         }
 
-        // weight based on mood (energy affects chaos)
-        const energy = fish.song.energy;
+        const energy = fish.track.energy;
 
         return {
             x:
